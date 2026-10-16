@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Antoine Théologien, ingénieur data &amp; IA</title>
+<meta name="description" content="Antoine Théologien, ingénieur data et IA. Surveillance de modèles en production, recherche d'information, fine-tuning de LLM.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sable: #ECDFC8;
+    --sable-clair: #F4EBDB;
+    --ligne: #D3C09E;
+    --brun: #2B1D14;
+    --brun-doux: #725A46;
+    --orange: #C9561A;
+    --display: "Bricolage Grotesque", Georgia, sans-serif;
+    --body: "Instrument Sans", system-ui, sans-serif;
+    --rail: 28px;          /* position horizontale de la ligne */
+    --decalage: 96px;      /* retrait du contenu */
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--sable); color: var(--brun); font-family: var(--body); font-size: 17px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+  a { color: var(--orange); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+
+  .barre { max-width: 1120px; margin: 0 auto; padding: 24px 24px 0; display: flex; justify-content: space-between; gap: 16px; font-size: 15px; }
+  .barre .nom { font-family: var(--display); font-weight: 600; }
+  .barre nav { display: flex; gap: 22px; }
+  .barre nav a { color: var(--brun-doux); text-decoration: none; }
+  .barre nav a:hover { color: var(--brun); }
+
+  /* ---------- La ligne ---------- */
+  .ligne-wrap { position: relative; max-width: 1120px; margin: 0 auto; padding: 0 24px 0 calc(24px + var(--decalage)); }
+  .voie, .voie-remplie { position: absolute; left: calc(24px + var(--rail)); top: 134px; width: 4px; border-radius: 2px; transform: translateX(-50%); }
+  .voie { bottom: 340px; background: var(--ligne); }
+  .voie-remplie { height: 0; background: var(--orange); }
+  .station { position: relative; }
+  .station::before {
+    content: ""; position: absolute; left: calc(var(--rail) - var(--decalage)); top: 14px; transform: translateX(-50%);
+    width: 18px; height: 18px; border-radius: 50%; background: var(--sable); border: 4px solid var(--ligne);
+    transition: border-color .3s, background .3s; z-index: 1;
+  }
+  .intro.station::before { top: 134px; }
+  .station.passee::before { border-color: var(--orange); }
+  .station.terminus::before { width: 24px; height: 24px; }
+  .station.terminus.passee::before { background: var(--orange); }
+
+  section { padding: 120px 0 0; }
+  .titre-section { font-family: var(--display); font-weight: 600; font-size: 17px; color: var(--brun-doux); margin-bottom: 40px; padding-top: 12px; }
+
+  /* ---------- Intro ---------- */
+  .intro { padding-top: 120px; }
+  .intro .qui { font-size: 17px; color: var(--brun-doux); padding-top: 12px; }
+  .intro h1 { font-family: var(--display); font-weight: 800; font-size: clamp(38px, 6.4vw, 78px); line-height: 1.02; letter-spacing: -0.035em; margin-top: 28px; max-width: 13em; }
+  .intro h1 .l { display: block; }
+  .apropos { display: grid; grid-template-columns: 1.3fr 1fr; gap: 56px; margin-top: 64px; align-items: start; }
+  .apropos p { max-width: 36em; }
+  .apropos p + p { margin-top: 16px; }
+  .fiche { border-top: 2px solid var(--brun); padding-top: 8px; font-size: 15px; }
+  .fiche div { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--ligne); }
+  .fiche dt { color: var(--brun-doux); }
+  .fiche dd { text-align: right; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .bouton { display: inline-block; padding: 11px 20px; border-radius: 999px; font-weight: 600; font-size: 15px; text-decoration: none; border: 2px solid var(--brun); color: var(--brun); transition: background .2s, color .2s, border-color .2s; }
+  .bouton:hover { background: var(--brun); color: var(--sable-clair); }
+  .bouton.plein { background: var(--orange); border-color: var(--orange); color: var(--sable-clair); }
+  .bouton.plein:hover { background: var(--brun); border-color: var(--brun); }
+
+  /* ---------- Projets ---------- */
+  .projet { display: grid; grid-template-columns: 260px 1fr; gap: 48px; padding: 40px 0; border-top: 1px solid var(--ligne); }
+  .projet.premier { border-top: 2px solid var(--brun); }
+  .chiffre { font-family: var(--display); font-weight: 800; font-size: 46px; line-height: 1; letter-spacing: -0.03em; color: var(--orange); }
+  .chiffre-legende { font-size: 14px; color: var(--brun-doux); margin-top: 10px; max-width: 16em; }
+  .projet h3 { font-family: var(--display); font-weight: 600; font-size: 28px; line-height: 1.15; letter-spacing: -0.015em; }
+  .projet .contexte { font-size: 15px; color: var(--brun-doux); margin-top: 6px; }
+  .projet p { margin-top: 14px; max-width: 38em; }
+  .projet .pile { font-size: 14px; color: var(--brun-doux); margin-top: 16px; }
+  .projet .lien { display: inline-block; margin-top: 12px; font-weight: 600; font-size: 15px; }
+
+  .autres-titre { font-family: var(--display); font-weight: 600; font-size: 17px; color: var(--brun-doux); border-top: 1px solid var(--ligne); padding-top: 32px; margin-top: 8px; }
+  .autres { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 40px; }
+  .autre { padding: 20px 0 8px; }
+  .autre h4 { font-family: var(--display); font-weight: 600; font-size: 20px; line-height: 1.2; }
+  .autre p { font-size: 15px; color: var(--brun-doux); margin-top: 8px; }
+  .lien-autre { display: inline-block; margin-top: 8px; font-size: 14px; font-weight: 600; }
+
+  /* ---------- Extraits ---------- */
+  .extrait { margin-top: 24px; background: var(--sable-clair); border-radius: 12px; padding: 20px 22px 18px; max-width: 40em; }
+  .extrait-titre { font-size: 14px; font-weight: 600; color: var(--brun-doux); margin-bottom: 14px; }
+  .barres { display: grid; gap: 12px; }
+  .barre-ligne { display: grid; grid-template-columns: 190px 1fr 64px; gap: 14px; align-items: center; font-size: 14px; }
+  .barre-ligne .etiquette { line-height: 1.3; }
+  .barre-ligne .etiquette small { display: block; color: var(--brun-doux); font-size: 13px; }
+  .barre-ligne .valeur { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+  .b { height: 12px; width: calc(var(--v) * 100%); background: var(--brun-doux); border-radius: 0 4px 4px 0; }
+  .b.fort { background: var(--orange); }
+  .extrait-note { font-size: 13px; color: var(--brun-doux); margin-top: 14px; }
+  .flux { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; counter-reset: etape; }
+  .flux li { position: relative; background: var(--sable); border-radius: 8px; padding: 12px 12px 14px; font-size: 14px; line-height: 1.35; }
+  .flux li strong { display: block; font-weight: 600; margin-bottom: 4px; }
+  .flux li span { color: var(--brun-doux); font-size: 13px; }
+  .flux li + li::before { content: ""; position: absolute; left: -10px; top: 50%; width: 10px; height: 2px; background: var(--orange); }
+  .flux li:last-child { background: var(--orange); color: var(--sable-clair); }
+  .flux li:last-child span { color: var(--sable-clair); opacity: .85; }
+  .projet .liens-projet { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+
+  /* ---------- Parcours ---------- */
+  .parcours { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+  .parcours h3 { font-family: var(--display); font-weight: 600; font-size: 22px; padding-bottom: 12px; border-bottom: 2px solid var(--brun); }
+  .etape { padding: 18px 0; border-bottom: 1px solid var(--ligne); }
+  .etape .quand { font-size: 14px; color: var(--brun-doux); }
+  .etape .quoi { font-weight: 600; margin-top: 2px; }
+  .etape .ou { font-size: 15px; color: var(--brun-doux); }
+
+  .outils { margin-top: 56px; display: grid; grid-template-columns: 160px 1fr; gap: 10px 32px; font-size: 16px; }
+  .outils dt { color: var(--brun-doux); }
+
+  /* ---------- Contact ---------- */
+  .contact { padding-bottom: 120px; }
+  .contact h2 { font-family: var(--display); font-weight: 800; font-size: clamp(36px, 5.6vw, 64px); line-height: 1.05; letter-spacing: -0.03em; max-width: 12em; }
+  .contact p { margin-top: 20px; max-width: 34em; color: var(--brun-doux); }
+  .contact .mail { display: inline-block; margin-top: 24px; font-family: var(--display); font-weight: 600; font-size: clamp(22px, 3.6vw, 34px); overflow-wrap: anywhere; }
+  .contact .reseaux { display: flex; gap: 24px; margin-top: 20px; font-weight: 600; }
+
+  footer { max-width: 1120px; margin: 0 auto; padding: 24px; font-size: 14px; color: var(--brun-doux); border-top: 1px solid var(--ligne); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px) {
+    .apropos { grid-template-columns: 1fr; gap: 40px; }
+    .projet { grid-template-columns: 1fr; gap: 20px; }
+    .autres { grid-template-columns: 1fr; }
+    .parcours { grid-template-columns: 1fr; gap: 48px; }
+  }
+  @media (max-width: 640px) {
+    :root { --rail: 10px; --decalage: 36px; }
+    .barre { padding: 20px 16px 0; }
+    .barre nav { gap: 14px; font-size: 14px; }
+    .barre nav .opt { display: none; }
+    .ligne-wrap { padding: 0 16px 0 calc(16px + var(--decalage)); }
+    .voie, .voie-remplie { left: calc(16px + var(--rail)); width: 3px; top: 94px; }
+    .station::before { width: 14px; height: 14px; border-width: 3px; top: 15px; }
+    .intro.station::before { top: 95px; }
+    .station.terminus::before { width: 18px; height: 18px; }
+    section, .intro { padding-top: 80px; }
+    .intro h1 .l { display: inline; }
+    .chiffre { font-size: 38px; }
+    .projet h3 { font-size: 24px; }
+    .outils { grid-template-columns: 1fr; gap: 2px; }
+    .extrait { padding: 16px; }
+    .barre-ligne { grid-template-columns: 1fr 56px; gap: 4px 12px; }
+    .barre-ligne .etiquette { grid-column: 1 / -1; }
+    .flux { grid-template-columns: 1fr; }
+    .flux li + li::before { left: 20px; top: -10px; width: 2px; height: 10px; }
+    .outils dd { margin-bottom: 12px; }
+  }
+
+  /* ---------- Mouvement ---------- */
+  @media (prefers-reduced-motion: no-preference) {
+    .js .intro h1 .l { opacity: 0; transform: translateY(0.4em); }
+    .js.pret .intro h1 .l { opacity: 1; transform: none; transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); transition-delay: calc(var(--i) * 110ms + 100ms); }
+    .js .apparait { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+    .js .apparait.vue { opacity: 1; transform: none; }
+    .js .apparait .b { transform: scaleX(0); transform-origin: left; }
+    .js .apparait.vue .b { transform: none; transition: transform .9s cubic-bezier(.2,.7,.2,1) .3s; }
+  }
+</style>
+</head>
+<body>
+
+<header class="barre">
+  <span class="nom">Antoine Théologien</span>
+  <nav aria-label="Navigation principale">
+    <a href="#projets">Projets</a>
+    <a href="#parcours" class="opt">Parcours</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<div class="ligne-wrap">
+  <div class="voie" aria-hidden="true"></div>
+  <div class="voie-remplie" aria-hidden="true"></div>
+
+  <section class="intro station" id="apropos">
+    <div class="qui">Antoine Théologien, ingénieur data &amp; IA à Paris</div>
+    <h1>
+      <span class="l" style="--i:0">Je fais en sorte que</span>
+      <span class="l" style="--i:1">les modèles de machine</span>
+      <span class="l" style="--i:2">learning tiennent la route</span>
+      <span class="l" style="--i:3">une fois en production.</span>
+    </h1>
+
+    <div class="apropos apparait">
+      <div>
+        <p>Je viens de terminer le Master MIND (Machine Learning, IA et Données) de Sorbonne Université. Pendant mon stage de fin d'études chez SNCF Connect &amp; Tech, j'ai construit un outil qui repère le moment où un modèle de recommandation de trajets commence à dériver, et qui prévient l'équipe quand c'est le cas.</p>
+        <p>Ce qui m'intéresse, c'est tout ce qui se passe après le notebook : surveiller des modèles, poser les bons tests statistiques, automatiser ce qui doit l'être. À côté, j'aime explorer des sujets plus proches de la recherche, comme la recherche d'information ou le fine-tuning efficace de LLM.</p>
+        <p>En dehors du code, il y a surtout le cinéma, le sport (le football avant tout, assez pour en avoir fait un projet de data) et la musique.</p>
+        <div class="actions">
+          <a class="bouton plein" href="#projets">Voir mes projets</a>
+          <a class="bouton" href="cv.pdf">Télécharger mon CV</a>
+        </div>
+      </div>
+      <dl class="fiche">
+        <div><dt>Postes visés</dt><dd>Data Scientist, ML Engineer</dd></div>
+        <div><dt>Disponible</dt><dd>Décembre 2026</dd></div>
+        <div><dt>Basé à</dt><dd>Paris</dd></div>
+        <div><dt>Langues</dt><dd>Français, anglais (B2)</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="station" id="projets">
+    <h2 class="titre-section">Projets</h2>
+
+    <article class="projet premier apparait">
+      <div>
+        <div class="chiffre">En prod</div>
+        <div class="chiffre-legende">Outil réutilisé sur plusieurs modèles après le stage</div>
+      </div>
+      <div>
+        <h3>Détecter la dérive d'un modèle en production</h3>
+        <div class="contexte">Stage de fin d'études, SNCF Connect &amp; Tech, 2026</div>
+        <p>Un modèle de recommandation de trajets se dégrade sans bruit quand les données réelles s'éloignent de celles de l'entraînement. J'ai d'abord exploré les données de production avec PySpark, puis conçu un outil qui compare les deux distributions avec Evidently (distance de Wasserstein, test de Kolmogorov-Smirnov). Il tourne automatiquement via Airflow et envoie une alerte Datadog en cas d'anomalie.</p>
+        <p>J'ai aussi rédigé toute la documentation, présenté le projet à l'équipe et assuré la maintenance de l'environnement (images Docker, nouvelles versions de librairies).</p>
+        <div class="extrait">
+          <div class="extrait-titre">Comment l'outil fonctionne</div>
+          <ol class="flux">
+            <li><strong>Données de prod</strong><span>Extraites et préparées avec PySpark</span></li>
+            <li><strong>Comparaison</strong><span>Entraînement contre production avec Evidently (Wasserstein, KS)</span></li>
+            <li><strong>Planification</strong><span>Exécution automatique orchestrée par Airflow</span></li>
+            <li><strong>Alerte</strong><span>Envoyée dans Datadog si une dérive est détectée</span></li>
+          </ol>
+        </div>
+        <div class="pile">PySpark, Evidently, Airflow, Datadog, Docker. Code propriétaire, non publié.</div>
+      </div>
+    </article>
+
+    <article class="projet apparait">
+      <div>
+        <div class="chiffre">0,81 → 0,94</div>
+        <div class="chiffre-legende">MRR, de la baseline BM25 au meilleur modèle SPLADE</div>
+      </div>
+      <div>
+        <h3>Un RAG qui retrouve mieux ses sources</h3>
+        <div class="contexte">Recherche d'information, 2025</div>
+        <p>Un pipeline RAG de bout en bout sur le jeu de données LoTTE. J'ai comparé une baseline BM25, un SPLADE entraîné moi-même (LoRA, distillation) et un SPLADE pré-entraîné, puis testé une fusion hybride et une expansion de requêtes par LLM. Le SPLADE pré-entraîné l'emporte nettement ; avec peu de ressources, l'entraîner soi-même reste loin derrière.</p>
+        <div class="extrait" role="figure" aria-label="MRR par méthode de recherche : BM25 0,807 ; SPLADE entraîné localement 0,549 ; SPLADE pré-entraîné 0,942 ; hybride BM25 et SPLADE 0,942">
+          <div class="extrait-titre">MRR par méthode de recherche</div>
+          <div class="barres">
+            <div class="barre-ligne"><div class="etiquette">BM25 <small>baseline</small></div><div class="b" style="--v:.807"></div><div class="valeur">0,807</div></div>
+            <div class="barre-ligne"><div class="etiquette">SPLADE <small>entraîné localement</small></div><div class="b" style="--v:.549"></div><div class="valeur">0,549</div></div>
+            <div class="barre-ligne"><div class="etiquette">SPLADE <small>pré-entraîné</small></div><div class="b fort" style="--v:.942"></div><div class="valeur">0,942</div></div>
+            <div class="barre-ligne"><div class="etiquette">Hybride <small>BM25 + SPLADE</small></div><div class="b fort" style="--v:.942"></div><div class="valeur">0,942</div></div>
+          </div>
+          <div class="extrait-note">Recall@5 passe aussi de 0,73 à 0,87. La fusion hybride n'apporte rien de plus : le meilleur poids pour BM25 est quasi nul.</div>
+        </div>
+        <div class="pile">Python, PyTorch, Hugging Face, PyTerrier</div>
+        <div class="liens-projet">
+          <a class="lien" href="https://github.com/antothl/splade-rag-lotte">Voir le code sur GitHub</a>
+          <a class="lien" href="https://github.com/antothl/splade-rag-lotte/blob/HEAD/report.pdf">Lire le rapport (PDF)</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="projet apparait">
+      <div>
+        <div class="chiffre">−80 %</div>
+        <div class="chiffre-legende">de mémoire GPU à l'entraînement avec QLoRA</div>
+      </div>
+      <div>
+        <h3>Fine-tuning complet, LoRA ou QLoRA&nbsp;?</h3>
+        <div class="contexte">Benchmark, 2025</div>
+        <p>Trois façons d'adapter un modèle de langage (DistilBERT, classification AG News), comparées avec Hugging Face PEFT sur la précision, la mémoire GPU, la vitesse et la sensibilité au rang. De quoi choisir la bonne méthode selon le matériel disponible.</p>
+        <div class="extrait" role="figure" aria-label="Mémoire GPU supplémentaire à l'entraînement : fine-tuning complet 1,14 Go, précision 0,880 ; LoRA 0,46 Go, précision 0,872 ; QLoRA 0,22 Go, précision 0,874">
+          <div class="extrait-titre">Mémoire GPU supplémentaire à l'entraînement</div>
+          <div class="barres">
+            <div class="barre-ligne"><div class="etiquette">Fine-tuning complet <small>précision 0,880</small></div><div class="b" style="--v:1"></div><div class="valeur">1,14 Go</div></div>
+            <div class="barre-ligne"><div class="etiquette">LoRA, r = 16 <small>précision 0,872</small></div><div class="b" style="--v:.404"></div><div class="valeur">0,46 Go</div></div>
+            <div class="barre-ligne"><div class="etiquette">QLoRA 4 bits <small>précision 0,874</small></div><div class="b fort" style="--v:.193"></div><div class="valeur">0,22 Go</div></div>
+          </div>
+          <div class="extrait-note">Même précision à 1,5 point près, avec 1,3 % des paramètres entraînés. En contrepartie, QLoRA s'entraîne environ 1,8 fois plus lentement que LoRA.</div>
+        </div>
+        <div class="pile">PyTorch, Hugging Face PEFT, quantification 4 bits</div>
+        <div class="liens-projet">
+          <a class="lien" href="https://github.com/antothl/lora-vs-qlora-peft-benchmark">Voir le code sur GitHub</a>
+          <a class="lien" href="https://github.com/antothl/lora-vs-qlora-peft-benchmark/blob/HEAD/report.pdf">Lire le rapport (PDF)</a>
+        </div>
+      </div>
+    </article>
+
+    <div class="apparait">
+      <h3 class="autres-titre">Et aussi</h3>
+      <div class="autres">
+        <div class="autre">
+          <h4>Mixture-of-Memories, réimplémenté depuis l'article</h4>
+          <p>Un modèle de séquences longues à complexité linéaire, alternative plus économe aux Transformers, réimplémenté à trois à partir du papier : une version PyTorch et des noyaux Triton optimisés. Master MIND, 2025.</p>
+          <a class="lien-autre" href="https://github.com/Pendigard/MoM-paper-reimplementation">Voir le code</a>
+        </div>
+        <div class="autre">
+          <h4>Répondre à des questions sur des tableaux Wikipédia</h4>
+          <p>Des LLM nettoient des tableaux désordonnés (Mistral 7B, CodeLlama), puis OmniSQL traduit les questions en SQL, évalué contre la vérité terrain sur WikiTableQuestions. Projet de groupe.</p>
+          <a class="lien-autre" href="https://github.com/Armand394/QA_wiki_tables">Voir le code</a>
+        </div>
+        <div class="autre">
+          <h4>Typage d'entités dans un graphe de connaissances</h4>
+          <p>Fine-tuning de LLM enrichi de connaissances sémantiques pour mieux attribuer un type aux entités d'un graphe de connaissances. Projet de groupe.</p>
+          <a class="lien-autre" href="https://github.com/Armand394/knowledge-graph-enrichment-using-LLM">Voir le code</a>
+        </div>
+        <div class="autre">
+          <h4>Prédire les matchs de football européen</h4>
+          <p>5 400 matchs sur trois saisons, tests statistiques, ACP et régression logistique interprétable. AUC de 0,77. Master MIND, 2025.</p>
+          <a class="lien-autre" href="https://github.com/antothl/Projet_Dalas">Voir le code</a>
+        </div>
+        <div class="autre">
+          <h4>Moodvie</h4>
+          <p>Une application web en cours de développement, avec une API en FastAPI. Projet personnel.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="station" id="parcours">
+    <h2 class="titre-section">Parcours</h2>
+    <div class="parcours apparait">
+      <div>
+        <h3>Expérience</h3>
+        <div class="etape">
+          <div class="quand">Février à août 2026</div>
+          <div class="quoi">ML Engineer, stage de fin d'études</div>
+          <div class="ou">SNCF Connect &amp; Tech, Saint-Denis</div>
+        </div>
+        <div class="etape">
+          <div class="quand">2023 à 2024</div>
+          <div class="quoi">Développeur web full-stack, deux stages</div>
+          <div class="ou">Groupe Europe Handling, Roissy-en-France. Deux applications internes (Symfony, JavaScript, SQL).</div>
+        </div>
+      </div>
+      <div>
+        <h3>Formation</h3>
+        <div class="etape">
+          <div class="quand">2024 à 2026</div>
+          <div class="quoi">Master MIND, mention Bien</div>
+          <div class="ou">Sorbonne Université, Paris</div>
+        </div>
+        <div class="etape">
+          <div class="quand">2021 à 2024</div>
+          <div class="quoi">Licence Informatique, Cursus Master Ingénierie</div>
+          <div class="ou">Université de Reims Champagne-Ardenne</div>
+        </div>
+      </div>
+    </div>
+
+    <dl class="outils apparait">
+      <dt>Langages</dt><dd>Python, SQL, Java</dd>
+      <dt>ML et stats</dt><dd>scikit-learn, PyTorch, TensorFlow, Hugging Face, tests statistiques, LLM</dd>
+      <dt>Données</dt><dd>Spark (PySpark), PostgreSQL, Oracle, Airflow</dd>
+      <dt>Production</dt><dd>Evidently, Datadog, MLflow, Docker, Kubernetes, AWS, Git, Linux</dd>
+    </dl>
+  </section>
+
+  <section class="station terminus contact" id="contact">
+    <h2>On en parle autour d'un café&nbsp;?</h2>
+    <p>Je cherche un poste de Data Scientist ou de ML Engineer à partir de décembre 2026. Le plus simple pour me joindre, c'est par mail.</p>
+    <a class="mail" href="mailto:theologiena@gmail.com">theologiena@gmail.com</a>
+    <div class="reseaux">
+      <a href="https://linkedin.com/in/antoinetheologien">LinkedIn</a>
+      <a href="https://github.com/antothl">GitHub</a>
+      <a href="cv.pdf">CV</a>
+    </div>
+  </section>
+</div>
+
+<footer>Antoine Théologien, 2026</footer>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    root.classList.add("js");
+    requestAnimationFrame(function () { requestAnimationFrame(function () { root.classList.add("pret"); }); });
+
+    // Blocs qui apparaissent au défilement
+    var blocs = document.querySelectorAll(".apparait");
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (items) {
+        items.forEach(function (it) { if (it.isIntersecting) { it.target.classList.add("vue"); io.unobserve(it.target); } });
+      }, { rootMargin: "0px 0px -10% 0px" });
+      blocs.forEach(function (b) { io.observe(b); });
+    } else {
+      blocs.forEach(function (b) { b.classList.add("vue"); });
+    }
+
+    // La ligne se remplit et les stations s'allument au fil de la lecture
+    var voie = document.querySelector(".voie");
+    var remplie = document.querySelector(".voie-remplie");
+    var stations = document.querySelectorAll(".station");
+    function pointStation(s) {
+      var pseudo = getComputedStyle(s, "::before");
+      return s.getBoundingClientRect().top + parseFloat(pseudo.top) + parseFloat(pseudo.height) / 2;
+    }
+    function maj() {
+      // la ligne va de la première à la dernière station
+      var premiere = pointStation(stations[0]), derniere = pointStation(stations[stations.length - 1]);
+      var wrapTop = voie.parentNode.getBoundingClientRect().top;
+      voie.style.top = remplie.style.top = (premiere - wrapTop) + "px";
+      voie.style.bottom = "auto";
+      voie.style.height = (derniere - premiere) + "px";
+      var debut = voie.getBoundingClientRect().top;
+      var total = voie.offsetHeight;
+      var fin = window.innerHeight + window.scrollY >= document.body.scrollHeight - 4;
+      var h = fin ? total : Math.max(0, Math.min(total, window.innerHeight * 0.55 - debut));
+      remplie.style.height = h + "px";
+      var niveau = debut + h;
+      stations.forEach(function (s) {
+        s.classList.toggle("passee", fin || pointStation(s) <= niveau + 2);
+      });
+    }
+    window.addEventListener("scroll", maj, { passive: true });
+    window.addEventListener("resize", maj);
+    maj();
+  })();
+</script>
+</body>
+</html>
