@@ -18,8 +18,8 @@
     --orange: #C9561A;
     --display: "Bricolage Grotesque", Georgia, sans-serif;
     --body: "Instrument Sans", system-ui, sans-serif;
-    --rail: 28px;          /* position horizontale de la ligne */
-    --decalage: 96px;      /* retrait du contenu */
+    --rail: 28px;          
+    --decalage: 96px;     
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--sable); color: var(--brun); font-family: var(--body); font-size: 17px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
@@ -33,7 +33,6 @@
   .barre nav a { color: var(--brun-doux); text-decoration: none; }
   .barre nav a:hover { color: var(--brun); }
 
-  /* ---------- La ligne ---------- */
   .ligne-wrap { position: relative; max-width: 1120px; margin: 0 auto; padding: 0 24px 0 calc(24px + var(--decalage)); }
   .voie, .voie-remplie { position: absolute; left: calc(24px + var(--rail)); top: 134px; width: 4px; border-radius: 2px; transform: translateX(-50%); }
   .voie { bottom: 340px; background: var(--ligne); }
@@ -52,7 +51,6 @@
   section { padding: 120px 0 0; }
   .titre-section { font-family: var(--display); font-weight: 600; font-size: 17px; color: var(--brun-doux); margin-bottom: 40px; padding-top: 12px; }
 
-  /* ---------- Intro ---------- */
   .intro { padding-top: 120px; }
   .intro .qui { font-size: 17px; color: var(--brun-doux); padding-top: 12px; }
   .intro h1 { font-family: var(--display); font-weight: 800; font-size: clamp(38px, 6.4vw, 78px); line-height: 1.02; letter-spacing: -0.035em; margin-top: 28px; max-width: 13em; }
@@ -70,7 +68,6 @@
   .bouton.plein { background: var(--orange); border-color: var(--orange); color: var(--sable-clair); }
   .bouton.plein:hover { background: var(--brun); border-color: var(--brun); }
 
-  /* ---------- Projets ---------- */
   .projet { display: grid; grid-template-columns: 260px 1fr; gap: 48px; padding: 40px 0; border-top: 1px solid var(--ligne); }
   .projet.premier { border-top: 2px solid var(--brun); }
   .chiffre { font-family: var(--display); font-weight: 800; font-size: 46px; line-height: 1; letter-spacing: -0.03em; color: var(--orange); }
@@ -88,7 +85,6 @@
   .autre p { font-size: 15px; color: var(--brun-doux); margin-top: 8px; }
   .lien-autre { display: inline-block; margin-top: 8px; font-size: 14px; font-weight: 600; }
 
-  /* ---------- Extraits ---------- */
   .extrait { margin-top: 24px; background: var(--sable-clair); border-radius: 12px; padding: 20px 22px 18px; max-width: 40em; }
   .extrait-titre { font-size: 14px; font-weight: 600; color: var(--brun-doux); margin-bottom: 14px; }
   .barres { display: grid; gap: 12px; }
@@ -108,7 +104,6 @@
   .flux li:last-child span { color: var(--sable-clair); opacity: .85; }
   .projet .liens-projet { display: flex; flex-wrap: wrap; gap: 8px 24px; }
 
-  /* ---------- Parcours ---------- */
   .parcours { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
   .parcours h3 { font-family: var(--display); font-weight: 600; font-size: 22px; padding-bottom: 12px; border-bottom: 2px solid var(--brun); }
   .etape { padding: 18px 0; border-bottom: 1px solid var(--ligne); }
@@ -119,7 +114,6 @@
   .outils { margin-top: 56px; display: grid; grid-template-columns: 160px 1fr; gap: 10px 32px; font-size: 16px; }
   .outils dt { color: var(--brun-doux); }
 
-  /* ---------- Contact ---------- */
   .contact { padding-bottom: 120px; }
   .contact h2 { font-family: var(--display); font-weight: 800; font-size: clamp(36px, 5.6vw, 64px); line-height: 1.05; letter-spacing: -0.03em; max-width: 12em; }
   .contact p { margin-top: 20px; max-width: 34em; color: var(--brun-doux); }
@@ -128,7 +122,6 @@
 
   footer { max-width: 1120px; margin: 0 auto; padding: 24px; font-size: 14px; color: var(--brun-doux); border-top: 1px solid var(--ligne); }
 
-  /* ---------- Responsive ---------- */
   @media (max-width: 900px) {
     .apropos { grid-template-columns: 1fr; gap: 40px; }
     .projet { grid-template-columns: 1fr; gap: 20px; }
@@ -158,7 +151,6 @@
     .outils dd { margin-bottom: 12px; }
   }
 
-  /* ---------- Mouvement ---------- */
   @media (prefers-reduced-motion: no-preference) {
     .js .intro h1 .l { opacity: 0; transform: translateY(0.4em); }
     .js.pret .intro h1 .l { opacity: 1; transform: none; transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); transition-delay: calc(var(--i) * 110ms + 100ms); }
@@ -185,19 +177,19 @@
   <div class="voie-remplie" aria-hidden="true"></div>
 
   <section class="intro station" id="apropos">
-    <div class="qui">Antoine Théologien, ingénieur data &amp; IA à Paris</div>
+    <div class="qui">Salut, moi c'est Antoine. Ingénieur data &amp; IA, en région parisienne.</div>
     <h1>
-      <span class="l" style="--i:0">Je fais en sorte que</span>
-      <span class="l" style="--i:1">les modèles de machine</span>
-      <span class="l" style="--i:2">learning tiennent la route</span>
-      <span class="l" style="--i:3">une fois en production.</span>
+      <span class="l" style="--i:0">Un modèle qui marche dans</span>
+      <span class="l" style="--i:1">un notebook, c'est bien.</span>
+      <span class="l" style="--i:2">Qui marche encore six mois</span>
+      <span class="l" style="--i:3">plus tard, c'est mieux.</span>
     </h1>
 
     <div class="apropos apparait">
       <div>
-        <p>Je viens de terminer le Master MIND (Machine Learning, IA et Données) de Sorbonne Université. Pendant mon stage de fin d'études chez SNCF Connect &amp; Tech, j'ai construit un outil qui repère le moment où un modèle de recommandation de trajets commence à dériver, et qui prévient l'équipe quand c'est le cas.</p>
-        <p>Ce qui m'intéresse, c'est tout ce qui se passe après le notebook : surveiller des modèles, poser les bons tests statistiques, automatiser ce qui doit l'être. À côté, j'aime explorer des sujets plus proches de la recherche, comme la recherche d'information ou le fine-tuning efficace de LLM.</p>
-        <p>En dehors du code, il y a surtout le cinéma, le sport (le football avant tout, assez pour en avoir fait un projet de data) et la musique.</p>
+        <p>Je sors tout juste du Master MIND de Sorbonne Université. Pendant mon stage de fin d'études chez SNCF Connect &amp; Tech, j'ai joué les vigies : j'ai construit un outil qui surveille un modèle de recommandation de trajets et qui prévient l'équipe dès que les données commencent à dériver. Il tourne aujourd'hui sur plusieurs modèles.</p>
+        <p>C'est ce qui me plaît le plus dans le machine learning : tout ce qui se passe après l'entraînement. Comprendre pourquoi un modèle se dégrade, choisir le bon test statistique, automatiser ce qui peut l'être. Et quand j'ai du temps, je creuse des sujets plus pointus, comme les RAG ou le fine-tuning de LLM sans faire exploser la mémoire GPU.</p>
+        <p>Loin de l'écran (enfin, pas toujours) : beaucoup de cinéma, beaucoup de musique, et du football dès que possible. Assez pour en avoir fait un projet de data.</p>
         <div class="actions">
           <a class="bouton plein" href="#projets">Voir mes projets</a>
           <a class="bouton" href="cv.pdf">Télécharger mon CV</a>
@@ -206,7 +198,7 @@
       <dl class="fiche">
         <div><dt>Postes visés</dt><dd>Data Scientist, ML Engineer</dd></div>
         <div><dt>Disponible</dt><dd>Décembre 2026</dd></div>
-        <div><dt>Basé à</dt><dd>Paris</dd></div>
+        <div><dt>Basé en</dt><dd>Île-de-France</dd></div>
         <div><dt>Langues</dt><dd>Français, anglais (B2)</dd></div>
       </dl>
     </div>
@@ -381,7 +373,6 @@
     root.classList.add("js");
     requestAnimationFrame(function () { requestAnimationFrame(function () { root.classList.add("pret"); }); });
 
-    // Blocs qui apparaissent au défilement
     var blocs = document.querySelectorAll(".apparait");
     if ("IntersectionObserver" in window) {
       var io = new IntersectionObserver(function (items) {
@@ -392,7 +383,6 @@
       blocs.forEach(function (b) { b.classList.add("vue"); });
     }
 
-    // La ligne se remplit et les stations s'allument au fil de la lecture
     var voie = document.querySelector(".voie");
     var remplie = document.querySelector(".voie-remplie");
     var stations = document.querySelectorAll(".station");
@@ -401,7 +391,6 @@
       return s.getBoundingClientRect().top + parseFloat(pseudo.top) + parseFloat(pseudo.height) / 2;
     }
     function maj() {
-      // la ligne va de la première à la dernière station
       var premiere = pointStation(stations[0]), derniere = pointStation(stations[stations.length - 1]);
       var wrapTop = voie.parentNode.getBoundingClientRect().top;
       voie.style.top = remplie.style.top = (premiere - wrapTop) + "px";
